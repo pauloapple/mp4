@@ -1,0 +1,29 @@
+    <!DOCTYPE html>
+<html>
+<head>
+    <style>
+	body { background-color: black;}
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 810px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video {
+            width: 610px;
+            height: 810px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="videoPlayer" controls autoplay loop muted>
+            <source src="vid/maquiagem.mp4" type="video/mp4">
+        </video>
+    </div>
+</body>
+</html>
