@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+	body { background-color: black;}
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 710px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video {
+            width: 400px;
+            height: 700px;
+            object-fit: cover;
+        }
+
+        #indicator-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="videoPlayer" controls autoplay muted>
+            <source src="vid/teste01.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="indicator-container">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+    </div>
+
+    <script>
+        const videoPlayer = document.getElementById('videoPlayer');
+        const indicators = document.querySelectorAll('.indicator');
+        const videoSources = ['vid/teste01.mp4', 'vid/teste02.mp4', 'vid/teste03.mp4'];
+        let currentVideoIndex = 0;
+
+        // Função para atualizar o vídeo exibido
+        function updateVideo() {
+            videoPlayer.src = videoSources[currentVideoIndex];
+            videoPlayer.play(); // Iniciar a reprodução automaticamente
+            updateIndicators();
+        }
+
+        // Função para atualizar os indicadores
+        function updateIndicators() {
+            indicators.forEach((indicator, index) => {
+                if (index === currentVideoIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // Event listener para o evento "ended" (fim do vídeo)
+        videoPlayer.addEventListener('ended', () => {
+            if (currentVideoIndex < videoSources.length - 1) {
+                currentVideoIndex++;
+                updateVideo();
+            } else {
+                currentVideoIndex = 0; // Reiniciar para o primeiro vídeo
+                updateVideo();
+            }
+        });
+
+        // Event listener para os indicadores
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentVideoIndex = index;
+                updateVideo();
+            });
+        });
+
+        updateIndicators();
+    </script>
+</body>
+</html>
